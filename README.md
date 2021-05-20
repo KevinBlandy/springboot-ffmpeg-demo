@@ -9,3 +9,6 @@ app:
   # 存储转码视频的文件夹
   video-folder: C:\Users\KevinBlandy\Desktop\tmp\video
 ```
+
+## 有什么问题，建议可以在此贴进行讨论
+[ttps://springboot.io/t/topic/3669](https://springboot.io/t/topic/3669)
