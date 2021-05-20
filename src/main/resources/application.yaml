@@ -1,0 +1,32 @@
+
+
+server:
+  port: 80
+
+logging:
+  level:
+    "root": DEBUG
+
+app:
+  # 存储转码视频的文件夹
+  video-folder: C:\Users\KevinBlandy\Desktop\tmp\video
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      # 不限制文件大小
+      max-file-size: -1
+      # 不限制请求体大小
+      max-request-size: -1
+      # 临时IO目录
+      location: "${java.io.tmpdir}"
+      # 不延迟解析
+      resolve-lazily: false
+      # 超过1Mb，就IO到临时目录
+      file-size-threshold: 1MB
+  web:
+    resources:
+      static-locations:
+        - "classpath:/static/"
+        - "file:${app.video-folder}" # 把视频文件夹目录，添加到静态资源目录列表

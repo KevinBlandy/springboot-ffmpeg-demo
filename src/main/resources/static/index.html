@@ -1,0 +1,60 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+    </head>
+    <body>
+        选择转码文件： <input name="file" type="file" accept="video/*" onchange="upload(event)">
+        <hr/>
+		<video id="video"  width="500" height="400" controls="controls"></video>
+    </body>
+    <script>
+    
+   		const video = document.getElementById('video');
+    	
+        function upload (e){
+            let files = e.target.files
+            if (!files) {
+                return
+            }
+            
+            // TODO 转码配置这里固定死了
+            var transCodeConfig = {
+            	poster: "00:00:00.001", // 截取第1毫秒作为封面
+            	tsSeconds: 15,				
+            	cutStart: "",
+            	cutEnd: ""
+            }
+            
+            // 执行上传
+            let formData = new FormData();
+            formData.append("file", files[0])
+            formData.append("config", new Blob([JSON.stringify(transCodeConfig)], {type: "application/json; charset=utf-8"}))
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(resp =>  resp.json())
+            .then(message => {
+            	if (message.success){
+            		// 设置封面
+            		video.poster = message.data.poster;
+            		
+            		// 渲染到播放器
+            		var hls = new Hls();
+        		    hls.loadSource(message.data.m3u8);
+        		    hls.attachMedia(video);
+            	} else {
+            		alert("转码异常，详情查看控制台");
+            		console.log(message.message);
+            	}
+            })
+            .catch(err => {
+            	alert("转码异常，详情查看控制台");
+                throw err
+            })
+        }
+    </script>
+</html>
