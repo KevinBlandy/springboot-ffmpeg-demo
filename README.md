@@ -11,4 +11,4 @@ app:
 ```
 
 ## 有什么问题，建议可以在此贴进行讨论
-[ttps://springboot.io/t/topic/3669](https://springboot.io/t/topic/3669)
+[https://springboot.io/t/topic/3669](https://springboot.io/t/topic/3669)
